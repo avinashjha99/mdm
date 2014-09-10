@@ -8,6 +8,7 @@ package com.mdmserver.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import javax.persistence.ForeignKey;
 
 /**
  *
@@ -23,7 +24,7 @@ public class AppPackage {
     private String packageName;
     @DatabaseField
     private String version;
-    @DatabaseField
+    @DatabaseField(foreign = true)
     private Account account;
     
     

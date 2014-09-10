@@ -69,11 +69,13 @@ public class AccountDaoImpl extends BaseDaoImpl<Account, Integer> implements Acc
         try {
            accounts= queryBuilder().where().eq(Account.QUERY_COLUMN_EMAILID, emailId).query();
         } catch (SQLException ex) {
+            System.out.println("Unable to query for users--------------------");
             Logger.getLogger(AccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(null!=accounts){
+        if((null!=accounts)&&(accounts.size()>0)){
             return accounts.get(0);
         }
+        
         return null;
     }
 

@@ -15,7 +15,7 @@ import com.j256.ormlite.table.DatabaseTable;
  *
  * @author avin
  */
-@DatabaseTable(tableName = "account")
+@DatabaseTable(tableName = "accountv3")
 public class Account {
     
     
@@ -39,8 +39,8 @@ public class Account {
     private String firstName;
     @DatabaseField
     private String lastName;
-    @ForeignCollectionField
-    ForeignCollection<AppPackage> appPackages;
+//    @ForeignCollectionField
+//    ForeignCollection<AppPackage> appPackages;
 
     
     public Account(){

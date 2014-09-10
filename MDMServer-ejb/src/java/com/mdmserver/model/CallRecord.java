@@ -21,7 +21,7 @@ public class CallRecord {
     
     @DatabaseField
     private String name;
-    @DatabaseField
+    @DatabaseField(foreign = true)
     private Account account;
 
     public Account getAccount() {
