@@ -16,6 +16,11 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "call_record")
 public class CallRecord {
     
+    public static final String QUERY_FOREIGN_COLUMN_ACCOUNT_ID= "account_id";
+    public static final int RETURN_CODE_ERROR_DOES_NOT_EXIST =-4;
+    public static final int RETURN_CODE_SUCCESS = 0;
+    public static final int RETURN_CODE_ERROR_WRONG_PARAMETERS= -2;
+    
     @DatabaseField(generatedId = true)
     private int id;
     

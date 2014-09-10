@@ -10,10 +10,11 @@ import com.google.gson.Gson;
 import com.mdmserver.constant.WebResponseCodeConstants;
 import com.mdmserver.managers.DatabaseManager;
 import com.mdmserver.model.AppPackage;
-import com.mdmserver.web.model.RegisterRequest;
-import com.mdmserver.web.model.RegisterResponse;
-import com.mdmserver.web.model.AppAnalyticsResponse;
+import com.mdmserver.model.CallRecord;
 import com.mdmserver.web.model.AppAnalyticsRequest;
+import com.mdmserver.web.model.AppAnalyticsResponse;
+import com.mdmserver.web.model.CallAnalyticsRequest;
+import com.mdmserver.web.model.CallAnalyticsResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -26,11 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author avin
+ * @author avinashk
  */
-@WebServlet(name = "AppAnalytics", urlPatterns = {"/AppAnalytics"})
-public class AppAnalytics extends HttpServlet {
+@WebServlet(name = "CallAnalytics", urlPatterns = {"/CallAnalytics"})
+public class CallAnalytics extends HttpServlet {
 
+    
     @EJB
     DatabaseManager dbManager;
     /**
@@ -59,16 +61,7 @@ public class AppAnalytics extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//         response.setContentType("text/html;charset=UTF-8");
-//        response.setContentType("application/json");
-//        Gson gson= new Gson();
-//        AppAnalyticsRequest rRequest =gson.fromJson(request.getReader(), AppAnalyticsRequest.class);
-//        AppAnalyticsResponse rResponse= new AppAnalyticsResponse();
-//        List<AppPackage> appPackages= dbManager.getAppPackagesForAccount(rRequest.getAccount());
-//        if(null!=appPackages){
-////            rResponse.setAppPackages(appPackages);
-//        }
-//        response.getWriter().print(gson.toJson(rResponse));
+        
     }
 
     /**
@@ -82,26 +75,27 @@ public class AppAnalytics extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         response.setContentType("application/json");
         Gson gson= new Gson();
-        AppAnalyticsRequest rRequest =gson.fromJson(request.getReader(), AppAnalyticsRequest.class);
-        AppAnalyticsResponse rResponse= new AppAnalyticsResponse();
+        
+        CallAnalyticsRequest rRequest =gson.fromJson(request.getReader(), CallAnalyticsRequest.class);
+        CallAnalyticsResponse rResponse= new CallAnalyticsResponse();
         if(null==rRequest.getAccount()){
              rResponse.setResponseCode(WebResponseCodeConstants.RESP_INVALID_REQUEST); 
              rResponse.setResponseMessage(WebResponseCodeConstants.RESP_INVALID_REQUEST_MSG);
         }
         else{
             //this means the user wants to fetch the list
-            if(null==rRequest.getAppPackages()){
-                List<AppPackage> appPackages= dbManager.getAppPackagesForAccount(rRequest.getAccount());
-                rResponse.setAppPackages(appPackages);
+            if(null==rRequest.getCallRecords()){
+                List<CallRecord> callRecords= dbManager.getCallRecordsForAccount(rRequest.getAccount());
+                rResponse.setCallRecords(callRecords);
                 rResponse.setResponseCode(WebResponseCodeConstants.RESP_SUCCESS);
                 rResponse.setResponseMessage(WebResponseCodeConstants.RESP_SUCCESS_MSG);
             }
             //this means to update the lise
             else{
-                int internalResultCode= dbManager.updateAppPackagesForAccount(rRequest.getAccount(), rRequest.getAppPackages());
+                int internalResultCode= dbManager.updateCallRecordsForAccount(rRequest.getAccount(), rRequest.getCallRecords());
                 switch(internalResultCode){
                     case AppPackage.RETURN_CODE_SUCCESS:
                         rResponse.setResponseCode(WebResponseCodeConstants.RESP_SUCCESS);

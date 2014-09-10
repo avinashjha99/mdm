@@ -20,4 +20,6 @@ public class WebResponseCodeConstants {
     public static final String RESP_USER_EXISTS_MSG="user already exists";
     public static final int RESP_SERVER_DOWN=-3;
     public static final String RESP_SERVER_DOWN_MSG="server down";
+    public static final int RESP_NO_USER_EXISTS=-4;
+    public static final String RESP_NO_USER_EXISTS_MSG="user does not exist";
 }

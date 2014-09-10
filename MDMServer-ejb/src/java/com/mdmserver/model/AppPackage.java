@@ -17,6 +17,11 @@ import javax.persistence.ForeignKey;
 @DatabaseTable(tableName = "app_package")
 public class AppPackage {
 
+    public static final String QUERY_FOREIGN_COLUMN_ACCOUNT_ID= "account_id";
+    public static final int RETURN_CODE_ERROR_DOES_NOT_EXIST =-4;
+    public static final int RETURN_CODE_SUCCESS = 0;
+    public static final int RETURN_CODE_ERROR_WRONG_PARAMETERS= -2;
+    
     
     @DatabaseField(generatedId = true)
     private int id;
@@ -26,6 +31,22 @@ public class AppPackage {
     private String version;
     @DatabaseField(foreign = true)
     private Account account;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
     
     
     public AppPackage(){
