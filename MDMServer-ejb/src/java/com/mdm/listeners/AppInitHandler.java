@@ -51,8 +51,8 @@ public class AppInitHandler {
         
         try {
             connectionSource = new JdbcConnectionSource(databaseUrl);
-            ((JdbcConnectionSource) connectionSource).setUsername("root");
-            ((JdbcConnectionSource) connectionSource).setPassword("nbuser");
+            ((JdbcConnectionSource) connectionSource).setUsername("sql-username");
+            ((JdbcConnectionSource) connectionSource).setPassword("sql-password");
             TableUtils.createTableIfNotExists(connectionSource, Account.class);
             AccountDao dao= new AccountDaoImpl(connectionSource);
             TableUtils.createTableIfNotExists(connectionSource, AppPackage.class);
