@@ -8,6 +8,7 @@ package com.mdmserver.dao;
 
 import com.j256.ormlite.dao.Dao;
 import com.mdmserver.model.Account;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface AccountDao extends Dao<Account, Integer>{
     public int unregisterUser(Account account);
     public boolean updateUser(Account account);
     public Account getUserByEmailId(String emailId);
+    public Account getUserByAccountId(int accountId);
     public int updateUserByEmailId(String emailId,String password, String fName, String lName, String cloudId);
+    public List<Account> querryAllUsers();
 }

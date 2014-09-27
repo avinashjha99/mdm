@@ -13,7 +13,7 @@ import com.j256.ormlite.table.DatabaseTable;
  *
  * @author avin
  */
-@DatabaseTable(tableName = "call_record")
+@DatabaseTable(tableName = "call_recordv3")
 public class CallRecord {
     
     public static final String QUERY_FOREIGN_COLUMN_ACCOUNT_ID= "account_id";
@@ -23,9 +23,14 @@ public class CallRecord {
     
     @DatabaseField(generatedId = true)
     private int id;
-    
     @DatabaseField
-    private String name;
+    private String phNumber;
+    @DatabaseField
+    private String callType;
+    @DatabaseField
+    private String callDate;
+    @DatabaseField
+    private String callDuration ;
     @DatabaseField(foreign = true)
     private Account account;
 
@@ -37,13 +42,39 @@ public class CallRecord {
         this.account = account;
     }
 
-    public String getName() {
-        return name;
+    public String getPhNumber() {
+        return phNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhNumber(String phNumber) {
+        this.phNumber = phNumber;
     }
+
+    public String getCallType() {
+        return callType;
+    }
+
+    public void setCallType(String callType) {
+        this.callType = callType;
+    }
+
+    public String getCallDate() {
+        return callDate;
+    }
+
+    public void setCallDate(String callDate) {
+        this.callDate = callDate;
+    }
+
+    public String getCallDuration() {
+        return callDuration;
+    }
+
+    public void setCallDuration(String callDuration) {
+        this.callDuration = callDuration;
+    }
+
+   
 
     public int getId() {
         return id;

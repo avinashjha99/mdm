@@ -78,6 +78,23 @@ public class AccountDaoImpl extends BaseDaoImpl<Account, Integer> implements Acc
         
         return null;
     }
+    
+    @Override
+    public Account getUserByAccountId(int accountId) {
+         List<Account> accounts=null;
+         
+        try {
+           accounts= queryBuilder().where().eq(Account.QUERY_COLUMN_PRIMARY_ID, accountId).query();
+        } catch (SQLException ex) {
+            System.out.println("Unable to query for users--------------------");
+            Logger.getLogger(AccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if((null!=accounts)&&(accounts.size()>0)){
+            return accounts.get(0);
+        }
+        
+        return null;
+    }
 
     @Override
     public int updateUserByEmailId(String emailId, String password, String fName, String lName, String cloudId) {
@@ -108,6 +125,20 @@ public class AccountDaoImpl extends BaseDaoImpl<Account, Integer> implements Acc
             return Account.RETURN_CODE_SUCCESS;
         }
         
+    }
+
+    @Override
+    public List<Account> querryAllUsers() {
+     List<Account> accounts=null;
+         
+        try {
+           accounts= queryBuilder().selectColumns(Account.FIELD_NAME_ID, Account.FIELD_NAME_EMAIL_ID, Account.FIELD_NAME_CLOUD_ID, Account.FIELD_NAME_FIRST_NAME, Account.FIELD_NAME_LAST_NAME, Account.FIELD_NAME_ACCOUNT_TYPE).where().gt(Account.QUERY_COLUMN_PRIMARY_ID, -1).query();
+        } catch (SQLException ex) {
+            System.out.println("Unable to query for users--------------------");
+            Logger.getLogger(AccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+        return accounts;
     }
 
     

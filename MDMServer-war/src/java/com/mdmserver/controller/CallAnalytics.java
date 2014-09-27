@@ -11,8 +11,7 @@ import com.mdmserver.constant.WebResponseCodeConstants;
 import com.mdmserver.managers.DatabaseManager;
 import com.mdmserver.model.AppPackage;
 import com.mdmserver.model.CallRecord;
-import com.mdmserver.web.model.AppAnalyticsRequest;
-import com.mdmserver.web.model.AppAnalyticsResponse;
+
 import com.mdmserver.web.model.CallAnalyticsRequest;
 import com.mdmserver.web.model.CallAnalyticsResponse;
 import java.io.IOException;
@@ -61,6 +60,31 @@ public class CallAnalytics extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         //if you reached this point then you are already validated as admin
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
+        Gson gson= new Gson();
+        String accountId= request.getParameter("id");
+        CallAnalyticsResponse rResponse= new CallAnalyticsResponse();
+        if(accountId==null){
+            rResponse.setResponseCode(WebResponseCodeConstants.RESP_INVALID_REQUEST); 
+            rResponse.setResponseMessage(WebResponseCodeConstants.RESP_INVALID_REQUEST_MSG);
+        }
+        else{
+            
+            try{
+                int accountIdparsed= Integer.parseInt(accountId);
+                List<CallRecord> callRecords= dbManager.getCallRecordsForAccount(accountIdparsed);
+                rResponse.setCallRecords(callRecords);
+                rResponse.setResponseCode(WebResponseCodeConstants.RESP_SUCCESS);
+                rResponse.setResponseMessage(WebResponseCodeConstants.RESP_SUCCESS_MSG);
+            }catch(NumberFormatException e){
+                rResponse.setResponseCode(WebResponseCodeConstants.RESP_INVALID_REQUEST); 
+                rResponse.setResponseMessage(WebResponseCodeConstants.RESP_INVALID_REQUEST_MSG);
+            }
+        }
+        
+        response.getWriter().print(gson.toJson(rResponse));
         
     }
 

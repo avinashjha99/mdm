@@ -8,8 +8,9 @@ package com.mdmserver.controller;
 
 import com.google.gson.Gson;
 import com.mdmserver.constant.WebResponseCodeConstants;
-import com.mdmserver.constants.CommandConstants;
+
 import com.mdmserver.managers.ControllerFacade;
+import com.mdmserver.model.ControlClient;
 import com.mdmserver.web.model.AppAnalyticsRequest;
 import com.mdmserver.web.model.AppAnalyticsResponse;
 import com.mdmserver.web.model.ControlRequest;
@@ -128,13 +129,13 @@ public class Control extends HttpServlet {
         //parse compulsory parameter accountid
         
         switch(rRequest.getCommandType()){
-            case CommandConstants.UNINSTALL_APP_CONTROL:
+            case ControlClient.UNINSTALL_APP_CONTROL:
                 deviceController.uninstallApp(rRequest.getAccountId(), rRequest.getData());
             break;
-            case CommandConstants.INSTALL_APP_CONTROL:
+            case ControlClient.INSTALL_APP_CONTROL:
                 deviceController.installApp(rRequest.getAccountId(), rRequest.getData());
             break;
-            case CommandConstants.LOCK_PHONE_CONTROL:
+            case ControlClient.LOCK_PHONE_CONTROL:
                 deviceController.lockPhone(rRequest.getAccountId());
                       
             break;

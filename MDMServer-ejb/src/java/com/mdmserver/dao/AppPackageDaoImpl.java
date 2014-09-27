@@ -37,6 +37,8 @@ public class AppPackageDaoImpl extends BaseDaoImpl<AppPackage, Integer> implemen
             return AppPackage.RETURN_CODE_ERROR_DOES_NOT_EXIST;
         }
         try {
+            //delete older data first
+            deleteAppPackages(account);
             this.appPackages= appPackages;
             this.account= account;
 //            for(AppPackage pckg: appPackages){
@@ -73,6 +75,17 @@ public class AppPackageDaoImpl extends BaseDaoImpl<AppPackage, Integer> implemen
         } catch (SQLException ex) {
             Logger.getLogger(AppPackageDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    
+    private void deleteAppPackages(Account account){
+         
+        try {
+            
+            delete(queryBuilder().where().eq(AppPackage.QUERY_FOREIGN_COLUMN_ACCOUNT_ID, account).query());
+            } catch (SQLException ex) {
+            Logger.getLogger(AppPackageDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

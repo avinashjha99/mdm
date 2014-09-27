@@ -19,4 +19,5 @@ import java.util.List;
 public interface CallRecordDao  extends Dao<CallRecord, Integer>{
     public int updateCallRecords(Account account, List<CallRecord> callRecords);
     public List<CallRecord> getCallRecords(Account account);
+ 
 }

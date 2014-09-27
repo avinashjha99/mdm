@@ -9,6 +9,8 @@ package com.mdm.listeners;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.mdmserver.dao.AccountDao;
+import com.mdmserver.dao.AccountDaoImpl;
 import com.mdmserver.managers.DatabaseManager;
 import com.mdmserver.model.Account;
 import com.mdmserver.model.AppPackage;
@@ -52,6 +54,7 @@ public class AppInitHandler {
             ((JdbcConnectionSource) connectionSource).setUsername("root");
             ((JdbcConnectionSource) connectionSource).setPassword("nbuser");
             TableUtils.createTableIfNotExists(connectionSource, Account.class);
+            AccountDao dao= new AccountDaoImpl(connectionSource);
             TableUtils.createTableIfNotExists(connectionSource, AppPackage.class);
             TableUtils.createTableIfNotExists(connectionSource, CallRecord.class);
 //            acd.performDBOperations(connectionSource);

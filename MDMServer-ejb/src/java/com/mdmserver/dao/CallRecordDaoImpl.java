@@ -38,6 +38,8 @@ public class CallRecordDaoImpl extends BaseDaoImpl<CallRecord, Integer> implemen
             return AppPackage.RETURN_CODE_ERROR_DOES_NOT_EXIST;
         }
         try {
+            //delete older data first
+            deleteCallRecords(account);
             this.callRecords= callRecords;
             this.account= account;
 //            for(AppPackage pckg: appPackages){
@@ -72,8 +74,20 @@ public class CallRecordDaoImpl extends BaseDaoImpl<CallRecord, Integer> implemen
             List<CallRecord> qCallRecords= queryBuilder().where().eq(CallRecord.QUERY_FOREIGN_COLUMN_ACCOUNT_ID, account).query();
             return qCallRecords;
         } catch (SQLException ex) {
-            Logger.getLogger(AppPackageDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CallRecordDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    
+    
+    private void deleteCallRecords(Account account){
+         
+        try {
+            
+            delete(queryBuilder().where().eq(CallRecord.QUERY_FOREIGN_COLUMN_ACCOUNT_ID, account).query());
+            } catch (SQLException ex) {
+            Logger.getLogger(CallRecordDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

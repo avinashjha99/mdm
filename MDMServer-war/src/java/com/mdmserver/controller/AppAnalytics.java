@@ -59,16 +59,34 @@ public class AppAnalytics extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//         response.setContentType("text/html;charset=UTF-8");
-//        response.setContentType("application/json");
-//        Gson gson= new Gson();
-//        AppAnalyticsRequest rRequest =gson.fromJson(request.getReader(), AppAnalyticsRequest.class);
-//        AppAnalyticsResponse rResponse= new AppAnalyticsResponse();
-//        List<AppPackage> appPackages= dbManager.getAppPackagesForAccount(rRequest.getAccount());
-//        if(null!=appPackages){
-////            rResponse.setAppPackages(appPackages);
-//        }
-//        response.getWriter().print(gson.toJson(rResponse));
+        
+        //if you reached this point then you are already validated as admin
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
+        Gson gson= new Gson();
+        String accountId= request.getParameter("id");
+        AppAnalyticsResponse rResponse= new AppAnalyticsResponse();
+        if(accountId==null){
+            rResponse.setResponseCode(WebResponseCodeConstants.RESP_INVALID_REQUEST); 
+            rResponse.setResponseMessage(WebResponseCodeConstants.RESP_INVALID_REQUEST_MSG);
+        }
+        else{
+            
+            try{
+                 int accountIdparsed= Integer.parseInt(accountId);
+                 List<AppPackage> appPackages= dbManager.getAppPackagesForAccount(accountIdparsed);
+                 rResponse.setAppPackages(appPackages);
+                rResponse.setResponseCode(WebResponseCodeConstants.RESP_SUCCESS);
+                rResponse.setResponseMessage(WebResponseCodeConstants.RESP_SUCCESS_MSG);
+            }catch(NumberFormatException e){
+                rResponse.setResponseCode(WebResponseCodeConstants.RESP_INVALID_REQUEST); 
+                rResponse.setResponseMessage(WebResponseCodeConstants.RESP_INVALID_REQUEST_MSG);
+            }
+        }
+        
+        response.getWriter().print(gson.toJson(rResponse));
+        
+        
     }
 
     /**
@@ -82,7 +100,7 @@ public class AppAnalytics extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         response.setContentType("application/json");
         Gson gson= new Gson();
         AppAnalyticsRequest rRequest =gson.fromJson(request.getReader(), AppAnalyticsRequest.class);
