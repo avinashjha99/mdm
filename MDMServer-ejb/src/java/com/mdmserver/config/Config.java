@@ -13,7 +13,7 @@ package com.mdmserver.config;
 public class Config {
     
     public static final String databaseUrl= "jdbc:mysql://localhost:3306/mdm1_2";
-    public static final String databaseUser= "root";
-    public static final String databasePassword= "nbuser";
+    public static final String databaseUser= "<put your root user here>";
+    public static final String databasePassword= "<put your password here>";
     public static final String gcmServerId= "<put your server key here>";
 }
